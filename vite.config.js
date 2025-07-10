@@ -9,11 +9,11 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}']
       },
       manifest: {
-        name: 'Calculadora de Dízimos',
-        short_name: 'Dízimos',
-        description: 'Calculadora de Dízimos, Ofertas, Primícias e Semeaduras',
-        theme_color: '#0f172a',
-        background_color: '#ffffff',
+        name: 'Gestão de Dízimos, Ofertas e Primícias',
+        short_name: 'Prosperando.me',
+        description: 'Calcule corretamente seus Dízimos, Ofertas, Primícias e Semeaduras',
+        theme_color: '#1A2A2A',
+        background_color: '#f4f6fa',
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',

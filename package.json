@@ -1,0 +1,23 @@
+{
+  "name": "calculadora-dizimos",
+  "version": "1.0.0",
+  "description": "Calculadora de Dízimos, Ofertas, Primícias e Semeaduras - PWA",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview"
+  },
+  "keywords": ["pwa", "dizimos", "calculadora", "igreja", "financas"],
+  "author": "Prosperando.me",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vite-plugin-pwa": "^0.17.0"
+  },
+  "dependencies": {
+    "workbox-window": "^7.0.0",
+    "chart.js": "^4.4.2"
+  }
+} 

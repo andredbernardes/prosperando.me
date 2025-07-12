@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      { "source": "/calculadora", "destination": "/calculadora.html" },
+      { "source": "/dashboard", "destination": "/dashboard.html" },
+      { "source": "/doacoes", "destination": "/doacoes.html" },
+      { "source": "/sobre", "destination": "/sobre.html" },
+      { "source": "/cadastro", "destination": "/cadastro.html" },
+      { "source": "/login", "destination": "/login.html" }
+    ]
+  }
+} 

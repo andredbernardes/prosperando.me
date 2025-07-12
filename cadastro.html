@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Membro - Prosperando.me</title>
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="top-navbar">
+    <div class="navbar-content">
+      <div class="navbar-logo">
+        <a href="/" style="display:flex;align-items:center;gap:0.7rem;text-decoration:none;">
+          <span class="logo-icon">🌱</span>
+          <span class="logo-text">Prosperando.me</span>
+        </a>
+      </div>
+      <ul class="navbar-menu">
+        <li><a href="/dashboard" class="navbar-link">📊 Dashboard</a></li>
+        <li><a href="/calculadora" class="navbar-link">🌱 Calculadora</a></li>
+        <li><a href="/doacoes" class="navbar-link">🪙 Doações</a></li>
+        <li><a href="/sobre" class="navbar-link">🙏 Sobre</a></li>
+      </ul>
+      <div class="navbar-user" id="navbar-user-container">
+        <a href="/login" class="navbar-login">Entrar</a>
+      </div>
+      <button class="navbar-burger" id="navbar-burger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="navbar-drawer" id="navbar-drawer">
+      <button class="drawer-close" id="drawer-close" aria-label="Fechar menu">&times;</button>
+      <ul class="drawer-menu">
+        <li><a href="/dashboard" class="drawer-link">Dashboard</a></li>
+        <li><a href="/calculadora" class="drawer-link">Calculadora</a></li>
+        <li><a href="/doacoes" class="drawer-link">Doações</a></li>
+        <li><a href="/sobre" class="drawer-link">Sobre</a></li>
+      </ul>
+      <div class="drawer-user" id="drawer-user-container"></div>
+    </div>
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  </nav>
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">
+        <span class="logo-icon">🌱</span>
+        <span class="logo-text">Cadastro de Membro</span>
+      </h1>
+      <p class="subtitle">Crie sua conta para acessar todos os recursos do Prosperando.me</p>
+    </div>
+  </header>
+  <main class="main novo-layout" style="min-height:100vh;display:flex;align-items:center;justify-content:center;">
+    <div id="cadastro-container" class="novo-card">
+      <h1 style="text-align:center;">Cadastro de Membro</h1>
+      <form id="form-cadastro" autocomplete="off">
+        <!-- Campo de foto removido -->
+        <div class="form-group">
+          <label for="cadastro-nome">Nome completo</label>
+          <input type="text" id="cadastro-nome" required>
+        </div>
+        <div class="form-group">
+          <label for="cadastro-telefone">Telefone</label>
+          <input type="tel" id="cadastro-telefone" required>
+        </div>
+        <div class="form-group">
+          <label for="cadastro-email">E-mail</label>
+          <input type="email" id="cadastro-email" required>
+        </div>
+        <div class="form-group">
+          <label for="cadastro-igreja">Igreja</label>
+          <input type="text" id="cadastro-igreja">
+        </div>
+        <div class="form-group">
+          <label for="cadastro-celula">Célula</label>
+          <input type="text" id="cadastro-celula">
+        </div>
+        <div class="form-group">
+          <label for="cadastro-pastor">Nome do Pastor/Líder</label>
+          <input type="text" id="cadastro-pastor">
+        </div>
+        <div class="form-group">
+          <label for="cadastro-entrada">Data de entrada</label>
+          <input type="date" id="cadastro-entrada">
+        </div>
+        <div class="form-group">
+          <label for="cadastro-batismo">Data de batismo</label>
+          <input type="date" id="cadastro-batismo">
+        </div>
+        <div class="form-group">
+          <label>Autoriza lembretes?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="cadastro-lembretes" value="sim" checked> Sim</label>
+            <label><input type="radio" name="cadastro-lembretes" value="nao"> Não</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Canal de lembrete</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="cadastro-canal" value="whatsapp"> WhatsApp</label>
+            <label><input type="checkbox" name="cadastro-canal" value="email"> E-mail</label>
+            <label><input type="checkbox" name="cadastro-canal" value="sms"> SMS</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cadastro-senha">Senha</label>
+          <input type="password" id="cadastro-senha" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <p class="form-link">Já tem conta? <a href="/login.html">Entrar</a></p>
+      </form>
+    </div>
+
+  </main>
+  <footer class="footer">
+    <div class="container">
+        <p>&copy; 2025 Prosperando.me - Gestão de dízimos e ofertas.</p>
+        <p class="footer-verse">"Trazei todos os dízimos à casa do tesouro..." - Malaquias 3:10</p>
+    </div>
+</footer>
+  <script type="module" src="/js/firebase.js"></script>
+  <script type="module" src="/js/cadastro-firebase.js"></script>
+</body>
+</html> 

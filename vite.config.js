@@ -1,7 +1,10 @@
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { resolve } from 'path'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
+  base: './',
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
@@ -31,6 +34,11 @@ export default defineConfig({
           }
         ]
       }
+    }),
+    viteStaticCopy({
+      targets: [
+        { src: 'style.css', dest: '.' }
+      ]
     })
   ],
   server: {
@@ -39,5 +47,22 @@ export default defineConfig({
   },
   preview: {
     allowedHosts: ['prosperando.me']
-  }
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        cadastro: resolve(__dirname, 'cadastro.html'),
+        calculadora: resolve(__dirname, 'calculadora.html'),
+        dashboard: resolve(__dirname, 'dashboard.html'),
+        doacoes: resolve(__dirname, 'doacoes.html'),
+        login: resolve(__dirname, 'login.html'),
+        membro: resolve(__dirname, 'membro.html'),
+        recuperar: resolve(__dirname, 'recuperar.html'),
+        sobre: resolve(__dirname, 'sobre.html')
+      }
+    }
+  },
+  // Fallback para SPA em servidores estáticos
+  // Para preview local, use o plugin vite-plugin-mpa-fallback
 }) 

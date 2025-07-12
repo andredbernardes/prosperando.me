@@ -2,6 +2,12 @@ const CACHE_NAME = 'calculadora-dizimos-v1';
 const urlsToCache = [
     '/',
     '/index.html',
+    '/calculadora.html',
+    '/dashboard.html',
+    '/doacoes.html',
+    '/sobre.html',
+    '/cadastro.html',
+    '/login.html',
     '/style.css',
     '/main.js',
     '/icon.svg',

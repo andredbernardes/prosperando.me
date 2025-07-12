@@ -191,3 +191,22 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 **Desenvolvido com ❤️ para a comunidade cristã**
 
 *"Trazei todos os dízimos à casa do tesouro, para que haja mantimento na minha casa; e provai-me nisto, diz o Senhor dos Exércitos, se eu não vos abrir as janelas do céu e não derramar sobre vós bênção sem medida."* - Malaquias 3:10 
+
+# Como ver os dados cadastrados de usuários no Firebase
+
+## Firestore (dados dos usuários)
+1. Acesse o [Console do Firebase](https://console.firebase.google.com)
+2. Selecione seu projeto
+3. No menu esquerdo, clique em **Firestore Database**
+4. Clique em **Data** (ou "Dados")
+5. Clique na coleção `usuarios` para ver os documentos de cada usuário
+
+## Storage (fotos dos usuários)
+1. No menu esquerdo do console do Firebase, clique em **Storage**
+2. Navegue até a pasta `fotosUsuarios`
+3. Dentro dela, cada pasta corresponde ao UID do usuário
+4. Clique para ver ou baixar as fotos enviadas
+
+---
+
+Se precisar de mais exemplos de código ou regras, veja os arquivos `js/cadastro-firebase.js`, `js/dashboard.js`, `firestore-rules.txt` e `storage-rules.txt`. 

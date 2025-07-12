@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prosperando.me - Sua gestão financeira cristã</title>
+  <title>Dashboard - Prosperando.me</title>
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- MENU/HEADER PADRÃO -->
+ <!-- MENU/HEADER PADRÃO -->
   <nav class="top-navbar">
     <div class="navbar-content">
       <div class="navbar-logo">
@@ -24,7 +24,7 @@
         <li><a href="/sobre" class="navbar-link">🙏 Sobre</a></li>
       </ul>
       <div class="navbar-user" id="navbar-user-container">
-        <a href="/login" class="navbar-login" id="navbar-login-btn">Entrar</a>
+        <a href="/login" class="navbar-login">Entrar</a>
       </div>
       <button class="navbar-burger" id="navbar-burger" aria-label="Abrir menu">
         <span></span><span></span><span></span>
@@ -42,34 +42,31 @@
     </div>
     <div class="drawer-backdrop" id="drawer-backdrop"></div>
   </nav>
-  <!-- FIM MENU/HEADER PADRÃO -->
-
-  <main class="landing-main">
-    <section class="landing-hero">
-      <h1 class="landing-title">Gestão financeira cristã, simples e poderosa</h1>
-      <p class="landing-subtitle">Calcule, registre e acompanhe seus dízimos, ofertas, primícias e doações de forma inteligente e segura.</p>
-      <div class="landing-actions">
-        <a href="/calculadora" class="btn btn-primary">Acessar Calculadora</a>
-        <a href="/cadastro" class="btn btn-secondary">Criar Conta</a>
-        <a href="/login" class="btn btn-secondary">Entrar</a>
+<!-- FIM MENU/HEADER PADRÃO -->
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">
+        <span class="logo-icon">📊</span>
+        <span class="logo-text">Dashboard</span>
+      </h1>
+      <p class="subtitle">Acompanhe seus dados e histórico de contribuições.</p>
+    </div>
+  </header>
+  <main class="main novo-layout">
+    <div id="dashboard-container" class="novo-card">
+      <h1>Bem-vindo à sua Dashboard!</h1>
+      <div id="user-info">
+        <p>Carregando seus dados...</p>
       </div>
-      <ul class="landing-benefits">
-        <li> Controle total dos seus tributos cristãos</li>
-        <li> Gráficos e relatórios automáticos</li>
-        <li> Segurança e privacidade</li>
-        <li> Acesso fácil pelo celular ou computador</li>
-      </ul>
-    </section>
+      <button id="btn-ir-calculadora" class="btn btn-primary">Ir para Calculadora</button>
+    </div>
   </main>
-
-  <!-- FOOTER PADRÃO -->
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2025 Prosperando.me - Gestão de dízimos e ofertas.</p>
-      <p class="footer-verse">"Trazei todos os dízimos à casa do tesouro..." - Malaquias 3:10</p>
+        <p>&copy; 2025 Prosperando.me - Gestão de dízimos e ofertas.</p>
+        <p class="footer-verse">"Trazei todos os dízimos à casa do tesouro..." - Malaquias 3:10</p>
     </div>
   </footer>
-  <!-- FIM FOOTER PADRÃO -->
-  <script type="module" src="main.js"></script>
+  <script type="module" src="js/dashboard.js"></script>
 </body>
 </html> 

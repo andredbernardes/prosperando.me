@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc, enableNetwork } from 'firebase/firestore';
 
 // Função para cadastrar usuário
-async function cadastrarUsuario(nome, email, senha) {
+async function cadastrarUsuario(nome, email, senha, cidade = '', estado = '') {
   if (!nome) throw new Error('Informe seu nome completo.');
   if (!email) throw new Error('Informe um e-mail válido.');
   if (!senha || senha.length < 6) throw new Error('A senha deve ter pelo menos 6 caracteres.');
@@ -28,6 +28,8 @@ async function cadastrarUsuario(nome, email, senha) {
       await setDoc(doc(db, 'usuarios', user.uid), {
         nome,
         email,
+        cidade,
+        estado,
         criadoEm: new Date().toISOString(),
         ultimaAtualizacao: new Date().toISOString()
       });
@@ -64,6 +66,8 @@ if (form) {
     const nome = document.getElementById('cadastro-nome').value.trim();
     const email = document.getElementById('cadastro-email').value.trim().toLowerCase();
     const senha = document.getElementById('cadastro-senha').value;
+    const cidade = document.getElementById('cadastro-cidade').value.trim();
+    const estado = document.getElementById('cadastro-estado').value.trim();
     const btn = form.querySelector('button[type="submit"]');
     const msg = form.querySelector('.form-msg') || (() => {
       const m = document.createElement('div');
@@ -79,7 +83,7 @@ if (form) {
     msg.textContent = '';
     
     try {
-      await cadastrarUsuario(nome, email, senha);
+      await cadastrarUsuario(nome, email, senha, cidade, estado);
       msg.style.color = 'green';
       msg.textContent = 'Cadastro realizado com sucesso! Redirecionando...';
       setTimeout(() => {

@@ -16,6 +16,13 @@ const rendaRestante = document.getElementById('renda-restante');
 const percentualTotal = document.getElementById('percentual-total');
 const totalSection = document.querySelector('.total-section');
 
+// Seletores dos novos botões e modal
+const btnPagar = document.getElementById('btn-pagar');
+const btnComprovante = document.getElementById('btn-comprovante');
+const modalPagamento = document.getElementById('modal-pagamento');
+const modalClose = document.getElementById('modal-close');
+const modalBackdrop = document.getElementById('modal-backdrop');
+
 function formatarMoeda(valor) {
     return new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -179,21 +186,147 @@ function mostrarNotificacao(mensagem, tipo = 'info') {
         }, 300);
     }, 3000);
 }
-calcularBtn.addEventListener('click', () => {
+function funcaoPagar() {
+    mostrarNotificacao('Funcionalidade de pagamento ainda não implementada.', 'info');
+}
+function funcaoEnviarComprovante() {
+    mostrarNotificacao('Funcionalidade de envio de comprovante ainda não implementada.', 'info');
+}
+
+// Função para copiar texto e mostrar notificação
+function copiarParaClipboard(texto) {
+    navigator.clipboard.writeText(texto).then(() => {
+        mostrarNotificacao('Chave copiada!', 'success');
+    }, () => {
+        mostrarNotificacao('Erro ao copiar.', 'error');
+    });
+}
+
+// Eventos de clique para copiar PIX e CNPJ
+const copiarPix = document.getElementById('copiar-pix');
+const copiarCnpj = document.getElementById('copiar-cnpj');
+if (copiarPix) {
+    copiarPix.addEventListener('click', function() {
+        copiarParaClipboard(copiarPix.textContent.trim());
+    });
+}
+if (copiarCnpj) {
+    copiarCnpj.addEventListener('click', function() {
+        copiarParaClipboard(copiarCnpj.textContent.trim());
+    });
+}
+
+// Função para mostrar/ocultar botões de ação
+function atualizarBotoesAcoes(ativo) {
+    if (btnPagar) btnPagar.style.display = ativo ? 'inline-flex' : 'none';
+    if (btnComprovante) {
+        btnComprovante.style.display = ativo ? 'inline-flex' : 'none';
+        btnComprovante.disabled = true;
+    }
+}
+
+// Mostrar modal de pagamento
+function abrirModalPagamento() {
+    if (modalPagamento) modalPagamento.style.display = 'flex';
+    if (btnComprovante) btnComprovante.disabled = false;
+}
+// Fechar modal de pagamento
+function fecharModalPagamento() {
+    if (modalPagamento) modalPagamento.style.display = 'none';
+}
+
+// Eventos do modal
+if (btnPagar) btnPagar.addEventListener('click', abrirModalPagamento);
+if (modalClose) modalClose.addEventListener('click', fecharModalPagamento);
+if (modalBackdrop) modalBackdrop.addEventListener('click', fecharModalPagamento);
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') fecharModalPagamento();
+});
+
+// Exibir botões após cálculo
+function exibirAcoesSeCalculoValido(resultados) {
+    if (resultados && resultados.totalContribuicoes > 0) {
+        atualizarBotoesAcoes(true);
+    } else {
+        atualizarBotoesAcoes(false);
+    }
+}
+
+// Geração do comprovante (screenshot)
+async function gerarComprovante() {
     try {
-        const rendaMensal = parseFloat(rendaInput.value) || 0;
-        const rendaExtra = parseFloat(rendaExtraInput.value) || 0;
+        const html2canvas = (await import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/+esm')).default;
+        const area = document.querySelector('.novo-card-lateral');
+        if (!area) throw new Error('Área de comprovante não encontrada.');
+        const canvas = await html2canvas(area, {backgroundColor: '#fff'});
+        const link = document.createElement('a');
+        link.download = 'comprovante-prosperando.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    } catch (err) {
+        mostrarNotificacao('Erro ao gerar comprovante. Tente novamente.', 'error');
+    }
+}
+if (btnComprovante) btnComprovante.addEventListener('click', gerarComprovante);
+
+// Função de máscara para moeda brasileira
+function aplicarMascaraMoeda(input) {
+    input.addEventListener('input', function(e) {
+        let valor = input.value.replace(/\D/g, '');
+        valor = (parseInt(valor, 10) || 0).toString();
+        while (valor.length < 3) valor = '0' + valor;
+        let parteInteira = valor.slice(0, -2);
+        let parteDecimal = valor.slice(-2);
+        parteInteira = parteInteira.replace(/^0+/, '') || '0';
+        let valorFormatado = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ',' + parteDecimal;
+        input.value = 'R$ ' + valorFormatado;
+    });
+    // Ao focar, remove o R$ para facilitar edição
+    input.addEventListener('focus', function() {
+        if (input.value === '' || input.value === 'R$ 0,00') input.value = '';
+    });
+    // Ao sair do foco, garante formatação
+    input.addEventListener('blur', function() {
+        let valor = input.value.replace(/\D/g, '');
+        valor = (parseInt(valor, 10) || 0).toString();
+        while (valor.length < 3) valor = '0' + valor;
+        let parteInteira = valor.slice(0, -2);
+        let parteDecimal = valor.slice(-2);
+        parteInteira = parteInteira.replace(/^0+/, '') || '0';
+        let valorFormatado = parteInteira.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ',' + parteDecimal;
+        input.value = 'R$ ' + valorFormatado;
+    });
+}
+
+// Aplicar máscara nos inputs de renda
+aplicarMascaraMoeda(rendaInput);
+aplicarMascaraMoeda(rendaExtraInput);
+
+// Função para extrair valor numérico dos inputs mascarados
+function extrairValorNumerico(input) {
+    return parseFloat(input.value.replace(/[^\d]/g, '')) / 100 || 0;
+}
+
+// Substituir o listener do botão calcular para restaurar o fluxo correto
+document.getElementById('calcular').addEventListener('click', () => {
+    try {
+        const rendaMensal = extrairValorNumerico(rendaInput);
+        const rendaExtra = extrairValorNumerico(rendaExtraInput);
         if (!validarEntrada(rendaMensal) && !validarEntrada(rendaExtra)) {
             mostrarNotificacao('Por favor, insira um valor válido para a renda.', 'error');
+            atualizarBotoesAcoes(false);
             return;
         }
         if (rendaMensal + rendaExtra <= 0) {
             mostrarNotificacao('A renda total deve ser maior que zero.', 'error');
+            atualizarBotoesAcoes(false);
             return;
         }
         const resultados = calcularContribuicoes(rendaMensal, rendaExtra);
         atualizarInterface(resultados);
         mostrarNotificacao('Cálculos realizados com sucesso!', 'success');
+        exibirAcoesSeCalculoValido(resultados);
         localStorage.setItem('ultimoCalculo', JSON.stringify({
             rendaMensal,
             rendaExtra,
@@ -203,8 +336,12 @@ calcularBtn.addEventListener('click', () => {
     } catch (error) {
         console.error('Erro no cálculo:', error);
         mostrarNotificacao(error.message || 'Erro ao calcular as contribuições.', 'error');
+        atualizarBotoesAcoes(false);
     }
 });
+// Inicialização: esconder botões
+atualizarBotoesAcoes(false);
+
 [rendaInput, rendaExtraInput].forEach(input => {
     input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -298,15 +435,6 @@ restaurarInputs();
 document.addEventListener('DOMContentLoaded', () => {
     carregarUltimoCalculo();
     rendaInput.focus();
-    calcularBtn.addEventListener('click', () => {
-        const textoOriginal = calcularBtn.textContent;
-        calcularBtn.textContent = 'Calculando...';
-        calcularBtn.disabled = true;
-        setTimeout(() => {
-            calcularBtn.textContent = textoOriginal;
-            calcularBtn.disabled = false;
-        }, 1000);
-    });
     const tooltips = [
         { element: rendaInput, text: 'Sua renda mensal fixa (salário, aposentadoria, etc.)' },
         { element: rendaExtraInput, text: 'Renda extra (freelance, bônus, vendas, etc.)' }

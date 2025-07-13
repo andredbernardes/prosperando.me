@@ -95,7 +95,9 @@ import Chart from 'chart.js/auto';
 let chartContribuicoes = null;
 
 function atualizarGrafico(resultados) {
-    const ctx = document.getElementById('chartContribuicoes').getContext('2d');
+    const canvas = document.getElementById('chartContribuicoes');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
     const data = {
         labels: ['Dízimo', 'Oferta', 'Primícias', 'Semeadura'],
         datasets: [{
@@ -158,28 +160,37 @@ function atualizarGrafico(resultados) {
 // Atualizar interface com resultados
 function atualizarInterface(resultados) {
     // Atualizar valores individuais
-    dizimoValor.textContent = formatarMoeda(resultados.dizimo);
-    ofertaValor.textContent = formatarMoeda(resultados.oferta);
-    primiciasValor.textContent = formatarMoeda(resultados.primicias);
-    semeaduraValor.textContent = formatarMoeda(resultados.semeadura);
+    if (dizimoValor) dizimoValor.textContent = formatarMoeda(resultados.dizimo);
+    if (ofertaValor) ofertaValor.textContent = formatarMoeda(resultados.oferta);
+    if (primiciasValor) primiciasValor.textContent = formatarMoeda(resultados.primicias);
+    if (semeaduraValor) semeaduraValor.textContent = formatarMoeda(resultados.semeadura);
 
     // Atualizar percentuais e descrições
-    document.querySelector('.dizimo .result-percent').textContent = '10% da renda (após primícias)';
-    document.querySelector('.dizimo .result-description').textContent = 'Dízimo sobre a renda líquida das primícias';
-    document.querySelector('.oferta .result-percent').textContent = '1% da renda';
-    document.querySelector('.oferta .result-description').textContent = 'Oferta voluntária (mínimo de 1%)';
-    document.querySelector('.primicias .result-percent').textContent = '1/30 da renda';
-    document.querySelector('.primicias .result-description').textContent = 'Primícias: um dia de trabalho';
-    document.querySelector('.semeadura .result-percent').textContent = '1% da renda';
-    document.querySelector('.semeadura .result-description').textContent = 'Semeadura (mínimo de 1%)';
+    const dizimoPercent = document.querySelector('.dizimo .result-percent');
+    const dizimoDesc = document.querySelector('.dizimo .result-description');
+    const ofertaPercent = document.querySelector('.oferta .result-percent');
+    const ofertaDesc = document.querySelector('.oferta .result-description');
+    const primiciasPercent = document.querySelector('.primicias .result-percent');
+    const primiciasDesc = document.querySelector('.primicias .result-description');
+    const semeaduraPercent = document.querySelector('.semeadura .result-percent');
+    const semeaduraDesc = document.querySelector('.semeadura .result-description');
+
+    if (dizimoPercent) dizimoPercent.textContent = '10% da renda (após primícias)';
+    if (dizimoDesc) dizimoDesc.textContent = 'Dízimo sobre a renda líquida das primícias';
+    if (ofertaPercent) ofertaPercent.textContent = '1% da renda';
+    if (ofertaDesc) ofertaDesc.textContent = 'Oferta voluntária (mínimo de 1%)';
+    if (primiciasPercent) primiciasPercent.textContent = '1/30 da renda';
+    if (primiciasDesc) primiciasDesc.textContent = 'Primícias: um dia de trabalho';
+    if (semeaduraPercent) semeaduraPercent.textContent = '1% da renda';
+    if (semeaduraDesc) semeaduraDesc.textContent = 'Semeadura (mínimo de 1%)';
 
     // Atualizar totais
-    totalContribuicoes.textContent = formatarMoeda(resultados.totalContribuicoes);
-    rendaRestante.textContent = formatarMoeda(resultados.rendaRestante);
-    percentualTotal.textContent = formatarPercentual(resultados.percentualTotal / 100);
+    if (totalContribuicoes) totalContribuicoes.textContent = formatarMoeda(resultados.totalContribuicoes);
+    if (rendaRestante) rendaRestante.textContent = formatarMoeda(resultados.rendaRestante);
+    if (percentualTotal) percentualTotal.textContent = formatarPercentual(resultados.percentualTotal / 100);
 
     // Mostrar seção de resultados com animação
-    resultsSection.style.display = 'block';
+    if (resultsSection) resultsSection.style.display = 'block';
 
     // Adicionar animação aos cards
     const cards = document.querySelectorAll('.result-card');
@@ -198,7 +209,7 @@ function atualizarInterface(resultados) {
 
 // Limpar interface
 function limparInterface() {
-    resultsSection.style.display = 'none';
+    if (resultsSection) resultsSection.style.display = 'none';
     if (rendaInput) rendaInput.value = '';
     if (rendaExtraInput) rendaExtraInput.value = '';
     if (rendaInput) rendaInput.focus();
@@ -318,8 +329,8 @@ function carregarUltimoCalculo() {
             
             // Só carregar se foi calculado nas últimas 24 horas
             if (agora - dados.timestamp < umDia) {
-                rendaInput.value = dados.rendaMensal;
-                rendaExtraInput.value = dados.rendaExtra;
+                if (rendaInput) rendaInput.value = dados.rendaMensal;
+                if (rendaExtraInput) rendaExtraInput.value = dados.rendaExtra;
                 atualizarInterface(dados.resultados);
                 mostrarNotificacao('Último cálculo carregado automaticamente.', 'info');
                 const chartSection = document.getElementById('chart-section');
@@ -377,8 +388,8 @@ function compartilharResultados() {
 
 // Função para limpar campos e esconder resultados/gráfico
 function limparCampos() {
-    rendaInput.value = '';
-    rendaExtraInput.value = '';
+    if (rendaInput) rendaInput.value = '';
+    if (rendaExtraInput) rendaExtraInput.value = '';
     localStorage.removeItem('inputsDizimo');
     localStorage.removeItem('ultimoCalculo');
     if (resultsSection) resultsSection.style.display = 'none';
@@ -388,7 +399,7 @@ function limparCampos() {
     if (totalContribuicoes) totalContribuicoes.textContent = 'R$ 0,00';
     if (rendaRestante) rendaRestante.textContent = 'R$ 0,00';
     if (percentualTotal) percentualTotal.textContent = '0%';
-    rendaInput.focus();
+    if (rendaInput) rendaInput.focus();
     verificarInputsEVizualizacao();
 }
 // Evento para botão Limpar
@@ -465,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     
     tooltips.forEach(({ element, text }) => {
-        element.title = text;
+        if (element) element.title = text;
     });
 
     // Seleção global do chartSection

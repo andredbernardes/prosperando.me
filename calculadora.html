@@ -18,7 +18,6 @@
         </a>
       </div>
       <ul class="navbar-menu">
-        <li><a href="/dashboard" class="navbar-link">📊 Dashboard</a></li>
         <li><a href="/calculadora" class="navbar-link">🌱 Calculadora</a></li>
         <li><a href="/doacoes" class="navbar-link">🪙 Doações</a></li>
         <li><a href="/sobre" class="navbar-link">🙏 Sobre</a></li>
@@ -33,7 +32,6 @@
     <div class="navbar-drawer" id="navbar-drawer">
       <button class="drawer-close" id="drawer-close" aria-label="Fechar menu">&times;</button>
       <ul class="drawer-menu">
-        <li><a href="/dashboard" class="drawer-link">Dashboard</a></li>
         <li><a href="/calculadora" class="drawer-link">Calculadora</a></li>
         <li><a href="/doacoes" class="drawer-link">Doações</a></li>
         <li><a href="/sobre" class="drawer-link">Sobre</a></li>
@@ -64,11 +62,11 @@
                   <h2>Informações de Renda</h2>
                   <div class="input-group">
                       <label for="renda">Renda Mensal (R$)</label>
-                      <input type="number" id="renda" placeholder="0,00" step="0.01" min="0">
+                      <input type="text" id="renda" placeholder="R$ 0,00" step="0.01" min="0">
                   </div>
                   <div class="input-group">
                       <label for="renda-extra">Renda Extra (R$)</label>
-                      <input type="number" id="renda-extra" placeholder="0,00" step="0.01" min="0">
+                      <input type="text" id="renda-extra" placeholder="R$ 0,00" step="0.01" min="0">
                   </div>
                   <button id="calcular" class="btn btn-primary">Calcular Contribuições</button>
                   <div class="input-actions">
@@ -135,6 +133,11 @@
                       </div>
                   </div>
               </div>
+              <!-- Adição dos botões de ação -->
+              <div class="payment-actions">
+                 <button id="btn-comprovante" class="btn btn-secondary" style="display:none;" disabled>Baixar comprovante</button>
+                 <button id="btn-pagar" class="btn btn-primary" style="display:none;">Ver dados de pagamento</button>
+                </div>
           </div>
       </div>
       <div class="dicas-versiculo-grid">
@@ -159,6 +162,32 @@
           </div>
       </div>
   </main>
+  <!-- Modal de Pagamento -->
+  <div id="modal-pagamento" class="modal-pagamento" style="display:none;">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <h2>Dados para Pagamento</h2>
+      <div class="modal-section modal-pix-row">
+        <div class="pix-info">
+          <h3>Primícias</h3>
+          <p><strong>PIX Sacerdote:</strong> <span class="copiar-chave" id="copiar-pix" style="cursor:pointer;user-select:all;">+5592999814775</span></p>
+        </div>
+        <div class="pix-img">
+          <img src="img/qrcode-pix.png" alt="PIX Ap. Francisco Edivar Alves" style="border-radius:12px;box-shadow:0 2px 8px #0001;">
+        </div>
+      </div>
+      <div class="modal-section modal-pix-row">
+        <div class="pix-info">
+          <h3>Dízimos, Ofertas e Semeaduras</h3>
+          <p><strong>CNPJ Igreja:</strong> <span class="copiar-chave" id="copiar-cnpj" style="cursor:pointer;user-select:all;">63692131000105</span></p>
+        </div>
+        <div class="pix-img">
+          <img src="img/qrcode-cnpj.png" alt="PIX Igreja Aliança Evangélica" style="border-radius:12px;box-shadow:0 2px 8px #0001;">
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+  </div>
   <footer class="footer">
     <div id="divisor-ft"></div>
       <div class="container">

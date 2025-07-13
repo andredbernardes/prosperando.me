@@ -199,9 +199,9 @@ function atualizarInterface(resultados) {
 // Limpar interface
 function limparInterface() {
     resultsSection.style.display = 'none';
-    rendaInput.value = '';
-    rendaExtraInput.value = '';
-    rendaInput.focus();
+    if (rendaInput) rendaInput.value = '';
+    if (rendaExtraInput) rendaExtraInput.value = '';
+    if (rendaInput) rendaInput.focus();
 }
 
 // Mostrar notificação
@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarUltimoCalculo();
     
     // Focar no primeiro input
-    rendaInput.focus();
+    if (rendaInput) rendaInput.focus();
     
     // Adicionar efeito de loading ao botão
     if (calcularBtn) {

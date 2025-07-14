@@ -231,13 +231,14 @@ section.landing-hero {
     box-shadow: 0 4px 16px 0 rgba(22,163,74,0.13);
 }
 button#calcular {
-    width: 100%;
+    width: 60%;
 }
 
 .btn-secondary {
     background: #f8fafc;
     color: var(--primary-dark);
     border: 1.5px solid var(--primary);
+    margin-right: 0.6rem;
 }
 .btn-secondary:hover,
 .btn-secondary:focus {
@@ -323,9 +324,9 @@ div#qrcode-pix img {
     font-weight: 400;
 }
 
-.total-section {
+/* .total-section {
     margin-bottom: 2rem;
-}
+} */
 .total-card {
     background: #f8fafc;
     color: var(--primary-dark);
@@ -367,13 +368,13 @@ div#qrcode-pix img {
 }
 .total-value {
     font-weight: 800;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     letter-spacing: -0.01em;
     color: var(--primary-dark);
 }
 
 .chart-section {
-    margin-top: 2.5rem;
+    margin-top: 0.5rem;
     margin-bottom: 2rem;
     background: #f8fafc;
     border-radius: 14px;
@@ -464,14 +465,14 @@ ul.landing-benefits li {
 }
 
 div#cadastro-container {
-    min-width: 620px;
+    /* min-width: 620px; */
     width: 60%;
 }
 
 .footer {
     background: none;
     color: var(--text-muted);
-    padding: 2.5rem 0.5rem 1.5rem 0.5rem;
+    padding: 2.5rem 1rem 1.5rem 1rem;
     text-align: center;
     margin-top: auto;
     font-size: 1rem;
@@ -576,6 +577,27 @@ div#divisor-ft {
     background: var(--primary-dark);
     box-shadow: 0 4px 16px 0 rgba(22,163,74,0.13);
 }
+@media (min-width: 901px) and (max-width: 1079px) {
+    button#calcular {
+        width: 65%;
+    }
+    
+    .btn-secondary {
+        background: #f8fafc;
+        color: var(--primary-dark);
+        border: 1.5px solid var(--primary);
+        margin-right: 0.6rem;
+        width: 30%;
+    }
+}
+@media (max-width: 398px) {
+    button#calcular {
+        width: 60%!important;
+    }
+    .btn-secondary {
+        width: 30%!important;
+    }
+}
 @media (max-width: 900px) {
     .navbar-content {
         width: 86vw;
@@ -592,14 +614,54 @@ div#divisor-ft {
         display: grid;
         grid-template-columns: 1fr;
         gap: 1rem 2rem;
-        /* max-width: 1200px; */
         align-items: stretch;
-        /* margin: 0 auto; */
         box-sizing: border-box;
-
+        margin: 5rem 1rem !important;
         align-content: center;
         justify-content: center;
         justify-items: center;
+    }
+    section.landing-hero {
+        width: 98%;
+    }
+    .landing-actions {
+        width: 100%;
+        padding: 0 10px;
+    }
+    .landing-actions a {
+        width: 71%;
+    }
+    #image-bg {
+        width: 100vw;
+        height: 100%;
+        position: absolute;
+        z-index: -1;
+        background-image: url(bg-bg.png);
+        background-size: 200%;
+        background-repeat: no-repeat;
+        background-position: 35%;
+        background-position-y: 13rem;
+    }
+    .container-img {
+        margin-left: 3rem;
+    }
+    .container-img img {
+        width: 70%;
+    }
+    div#cadastro-container {
+        width: 100%;
+    }
+
+    button#calcular {
+        width: 70%;
+    }
+    
+    .btn-secondary {
+        background: #f8fafc;
+        color: var(--primary-dark);
+        border: 1.5px solid var(--primary);
+        margin-right: 0.6rem;
+        width: 25%;
     }
 }
 @media (max-width: 600px) {
@@ -642,8 +704,10 @@ body, .main, .novo-layout, .header {
 
 }
 @media (max-width: 600px) {
-    body, .main, .novo-layout, .header {
-
+    .novo-layout{
+        margin: 0 1rem;
+        width: 92%;
+        margin-top: -2rem;
     }
 }
 
@@ -689,9 +753,7 @@ body, .main, .novo-layout, .header {
     .logo-text {
         font-size: 1.3rem;
     }
-    .main {
-        padding: 0 .5rem;
-    }
+    
     .novo-layout-grid {
         max-width: 100vw;
         padding: 0 0.5rem;
@@ -886,7 +948,7 @@ body, .main, .novo-layout, .header {
     font-size: 2rem;
     color: var(--text-main);
     font-weight: 600;
-    margin: 1em 1.5em 1em 1.5em;
+    margin: 2.5rem;
     font-style: italic;
     line-height: 1.5;
 }
@@ -1096,7 +1158,7 @@ main.landing-main {
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
-    margin-top: 1.5rem;
+    /* margin-top: 1.5rem; */
     margin-bottom: 0.5rem;
 }
 .payment-actions .btn {

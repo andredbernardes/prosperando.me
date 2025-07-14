@@ -68,14 +68,14 @@
                       <label for="renda-extra">Renda Extra (R$)</label>
                       <input type="text" id="renda-extra" placeholder="R$ 0,00" step="0.01" min="0">
                   </div>
-                  <button id="calcular" class="btn btn-primary">Calcular Contribuições</button>
-                  <div class="input-actions">
+                  <button id="limpar" class="btn btn-secondary" type="button">Limpar</button>
+                  <button id="calcular" class="btn btn-primary">Calcular tributos</button>
+                  <!-- <div class="input-actions">
                       <button id="compartilhar" class="btn btn-secondary" type="button">Compartilhar</button>
-                      <button id="limpar" class="btn btn-secondary" type="button">Limpar</button>
-                  </div>
+                  </div> -->
               </section>
               <div class="chart-section" id="chart-section">
-                  <h3 class="chart-title">Visualização Gráfica</h3>
+                  <h3 class="chart-title">Distribuição dos tributos</h3>
                   <canvas id="chartContribuicoes" height="260"></canvas>
               </div>
           </div>
@@ -89,13 +89,13 @@
                           <h3>Primícias</h3>
                           <div class="result-value" id="primicias-valor">R$ 0,00</div>
                           <div class="result-percent">Primeiros frutos</div>
-                          <div class="result-description">Primeira parte de suas bênçãos</div>
+                          <div class="result-description">Primeira parte de suas bênçãos (1 dia de trabalho)</div>
                       </div>
                       <div class="result-card dizimo">
                           <div class="result-icon">⛪</div>
                           <h3>Dízimo</h3>
                           <div class="result-value" id="dizimo-valor">R$ 0,00</div>
-                          <div class="result-percent">10% da renda</div>
+                          <div class="result-percent">10% de toda a renda</div>
                           <div class="result-description">Contribuição regular para a obra de Deus</div>
                       </div>
                       <div class="result-card semeadura">
@@ -109,8 +109,8 @@
                           <div class="result-icon">🪙</div>
                           <h3>Oferta</h3>
                           <div class="result-value" id="oferta-valor">R$ 0,00</div>
-                          <div class="result-percent">5% da renda</div>
-                          <div class="result-description">Oferta voluntária com gratidão</div>
+                          <div class="result-percent">Mínimo de 1% da renda</div>
+                          <div class="result-description">Oferta voluntária de gratidão</div>
                       </div>
                   </div>
               </section>

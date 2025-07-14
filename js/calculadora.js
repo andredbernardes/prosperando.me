@@ -128,11 +128,11 @@ function atualizarInterface(resultados) {
     primiciasValor.textContent = formatarMoeda(resultados.primicias);
     semeaduraValor.textContent = formatarMoeda(resultados.semeadura);
     document.querySelector('.dizimo .result-percent').textContent = '10% da renda (após primícias)';
-    document.querySelector('.dizimo .result-description').textContent = 'Dízimo sobre a renda líquida das primícias';
+    document.querySelector('.dizimo .result-description').textContent = 'Dízimo da renda bruta';
     document.querySelector('.oferta .result-percent').textContent = '1% da renda';
-    document.querySelector('.oferta .result-description').textContent = 'Oferta voluntária (mínimo de 1%)';
-    document.querySelector('.primicias .result-percent').textContent = '1/30 da renda';
-    document.querySelector('.primicias .result-description').textContent = 'Primícias: um dia de trabalho';
+    document.querySelector('.oferta .result-description').textContent = 'Ofertas (mínimo de 1%)';
+    document.querySelector('.primicias .result-percent').textContent = '1/30 da renda total';
+    document.querySelector('.primicias .result-description').textContent = 'Primícias = 1 dia de trabalho';
     document.querySelector('.semeadura .result-percent').textContent = '1% da renda';
     document.querySelector('.semeadura .result-description').textContent = 'Semeadura (mínimo de 1%)';
     totalContribuicoes.textContent = formatarMoeda(resultados.totalContribuicoes);

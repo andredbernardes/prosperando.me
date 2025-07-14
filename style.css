@@ -129,6 +129,9 @@ section.landing-hero {
 .container-img img {
     width: 80%;
 }
+a.btn.btn-primary {
+    margin-right: 8px;
+}
 .novo-layout-grid {
     display: grid;
     grid-template-columns: 1fr 1.2fr;

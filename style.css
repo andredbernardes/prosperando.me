@@ -235,7 +235,7 @@ div#perfil {
     box-shadow: 0 4px 16px 0 rgba(22,163,74,0.13);
 }
 button#calcular {
-    width: 60%;
+    width: 100%;
 }
 
 .btn-secondary {

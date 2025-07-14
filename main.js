@@ -633,36 +633,7 @@ import { doc, getDoc } from 'firebase/firestore';
 const protectedPages = ['/dashboard.html'];
 const publicPages = ['/login.html', '/cadastro.html', '/recuperar.html'];
 
-function renderUserDropdown(user, role) {
-  const container = document.getElementById('navbar-user-container');
-  if (!container) return;
-  container.innerHTML = `
-    <div class="navbar-user-dropdown-trigger" id="navbar-user-trigger">
-      <span class="navbar-username">${user.displayName || user.email}</span>
-      <span class="navbar-user-caret">▼</span>
-    </div>
-    <div class="navbar-user-dropdown" id="navbar-user-dropdown" style="display:none;">
-      ${role === 'admin' || role === 'responsavel' ? '<a href="/membro.html" class="navbar-user-item">Área do Membro</a>' : ''}
-      <a href="/perfil.html" class="navbar-user-item">Meu Perfil</a>
-      <button id="navbar-logout-btn" class="navbar-user-item">Sair</button>
-    </div>
-  `;
-  // Dropdown toggle
-  const trigger = document.getElementById('navbar-user-trigger');
-  const dropdown = document.getElementById('navbar-user-dropdown');
-  trigger.onclick = () => {
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-  };
-  // Fecha dropdown ao clicar fora
-  document.addEventListener('click', (e) => {
-    if (!container.contains(e.target)) dropdown.style.display = 'none';
-  });
-  // Logout
-  document.getElementById('navbar-logout-btn').onclick = async () => {
-    await signOut(auth);
-    window.location.href = '/login.html';
-  };
-}
+// Remover função renderUserDropdown e qualquer chamada a ela
 
 function renderLoginButton() {
   const container = document.getElementById('navbar-user-container');
@@ -689,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
           role = docSnap.data().role || '';
         }
       } catch {}
-      renderUserDropdown(user, role);
+      // renderUserDropdown(user, role); // Removido
     } else {
       // Se não logado, redireciona para login em páginas protegidas
       if (protectedPages.includes(path)) {

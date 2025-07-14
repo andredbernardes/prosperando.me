@@ -67,22 +67,21 @@ function renderUserMenu(user) {
   const navbarUser = document.getElementById('navbar-user-container');
   const drawerUser = document.getElementById('drawer-user-container');
   if (!navbarUser) return;
+  // Limpa ambos sempre
   navbarUser.innerHTML = '';
   drawerUser && (drawerUser.innerHTML = '');
-  if (user) {
-    // Dropdown desktop
+  // Função para criar dropdown
+  function createDropdown(target, isMobile) {
     const dropdown = document.createElement('div');
     dropdown.className = 'user-dropdown';
     dropdown.innerHTML = `
-      <button class="user-btn" type="button">🙏 ${user.displayName || user.email || 'Usuário'} ▼</button>
+      <button class="user-btn" type="button">🙏 ${user.displayName || user.email || 'Usuário'} </button>
       <div class="user-dropdown-content">
-        <a href="/perfil.html">Meu perfil</a>
-        <a href="#" id="logout-link">Sair</a>
+        <a href="./perfil.html">Meu perfil</a>
+        <a href="#" id="logout-link${isMobile ? '-mobile' : ''}">Sair</a>
       </div>
     `;
-    navbarUser.appendChild(dropdown);
-    console.log('Dropdown inserido em:', dropdown.parentNode);
-    // Clique para abrir/fechar
+    target.appendChild(dropdown);
     const btn = dropdown.querySelector('.user-btn');
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -91,50 +90,41 @@ function renderUserMenu(user) {
     document.addEventListener('click', function(e) {
       if (!dropdown.contains(e.target)) dropdown.classList.remove('open');
     });
-    // Dropdown mobile
-    if (drawerUser) {
-      const drawerDropdown = document.createElement('div');
-      drawerDropdown.className = 'user-dropdown';
-      drawerDropdown.innerHTML = `
-        <button class="user-btn" type="button">🙏 ${user.displayName || user.email || 'Usuário'} ▼</button>
-        <div class="user-dropdown-content">
-          <a href="/perfil.html">Meu perfil</a>
-          <a href="#" id="logout-link-mobile">Sair</a>
-        </div>
-      `;
-      drawerUser.appendChild(drawerDropdown);
-      console.log('Dropdown mobile inserido em:', drawerDropdown.parentNode);
-      const btnMobile = drawerDropdown.querySelector('.user-btn');
-      btnMobile.addEventListener('click', function(e) {
-        e.stopPropagation();
-        drawerDropdown.classList.toggle('open');
-      });
-      document.addEventListener('click', function(e) {
-        if (!drawerDropdown.contains(e.target)) drawerDropdown.classList.remove('open');
-      });
-    }
-    // Logout
-    setTimeout(() => {
-      const logoutBtn = document.getElementById('logout-link');
-      const logoutBtnMobile = document.getElementById('logout-link-mobile');
-      if (logoutBtn) logoutBtn.onclick = logout;
-      if (logoutBtnMobile) logoutBtnMobile.onclick = logout;
-    }, 100);
-  } else {
-    // Botão Entrar
-    const loginBtn = document.createElement('a');
-    loginBtn.href = '/login';
-    loginBtn.className = 'navbar-login';
-    loginBtn.textContent = 'Entrar';
-    navbarUser.appendChild(loginBtn);
-    if (drawerUser) {
-      const loginBtnMobile = document.createElement('a');
-      loginBtnMobile.href = '/login';
-      loginBtnMobile.className = 'drawer-login';
-      loginBtnMobile.textContent = 'Entrar';
-      drawerUser.appendChild(loginBtnMobile);
+  }
+  // Decide onde renderizar baseado na largura da tela
+  function renderByScreen() {
+    navbarUser.innerHTML = '';
+    drawerUser && (drawerUser.innerHTML = '');
+    if (user) {
+      if (window.innerWidth > 900) {
+        // Desktop: só no topo
+        createDropdown(navbarUser, false);
+      } else {
+        // Mobile: só no drawer
+        if (drawerUser) createDropdown(drawerUser, true);
+      }
+      setTimeout(() => {
+        const logoutBtn = document.getElementById('logout-link');
+        const logoutBtnMobile = document.getElementById('logout-link-mobile');
+        if (logoutBtn) logoutBtn.onclick = logout;
+        if (logoutBtnMobile) logoutBtnMobile.onclick = logout;
+      }, 100);
+    } else {
+      // Botão Entrar
+      const loginBtn = document.createElement('a');
+      loginBtn.href = '/login';
+      loginBtn.className = 'navbar-login';
+      loginBtn.textContent = 'Entrar';
+      if (window.innerWidth > 900) {
+        navbarUser.appendChild(loginBtn);
+      } else if (drawerUser) {
+        drawerUser.appendChild(loginBtn);
+      }
     }
   }
+  renderByScreen();
+  // Atualiza ao redimensionar
+  window.addEventListener('resize', renderByScreen);
 }
 
 async function logout(e) {

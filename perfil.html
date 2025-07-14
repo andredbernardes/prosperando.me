@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Perfil - Prosperando.me</title>
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- MENU/HEADER PADRÃO -->
+  <nav class="top-navbar">
+    <div class="navbar-content">
+      <div class="navbar-logo">
+        <a href="/" style="display:flex;align-items:center;gap:0.7rem;text-decoration:none;">
+          <span class="logo-icon">🌱</span>
+          <span class="logo-text">Prosperando.me</span>
+        </a>
+      </div>
+      <ul class="navbar-menu">
+        <li><a href="/calculadora" class="navbar-link">🌱 Calculadora</a></li>
+        <li><a href="/doacoes" class="navbar-link">🪙 Doações</a></li>
+        <li><a href="/sobre" class="navbar-link">🙏 Sobre</a></li>
+      </ul>
+      <div class="navbar-user" id="navbar-user-container"></div>
+      <button class="navbar-burger" id="navbar-burger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="navbar-drawer" id="navbar-drawer">
+      <button class="drawer-close" id="drawer-close" aria-label="Fechar menu">&times;</button>
+      <ul class="drawer-menu">
+        <li><a href="/calculadora" class="drawer-link">Calculadora</a></li>
+        <li><a href="/doacoes" class="drawer-link">Doações</a></li>
+        <li><a href="/sobre" class="drawer-link">Sobre</a></li>
+      </ul>
+      <div class="drawer-user" id="drawer-user-container"></div>
+    </div>
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  </nav>
+  <!-- FIM MENU/HEADER PADRÃO -->
+
+  <main class="main novo-layout">
+    <div id="perfil" class="novo-card">
+      <h2 style="text-align:center;">Meu Perfil</h2>
+      <form id="perfil-form">
+        <div class="form-group">
+          <label for="perfil-nome">Nome completo</label>
+          <input type="text" id="perfil-nome" name="nome" required autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="perfil-telefone">Telefone</label>
+          <input type="tel" id="perfil-telefone" name="telefone" required autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="perfil-email">E-mail</label>
+          <input type="email" id="perfil-email" name="email" required autocomplete="email" disabled>
+        </div>
+        <div class="form-group">
+          <label for="perfil-igreja">Igreja</label>
+          <input type="text" id="perfil-igreja" name="igreja">
+        </div>
+        <div class="form-group">
+          <label for="perfil-celula">Célula</label>
+          <input type="text" id="perfil-celula" name="celula">
+        </div>
+        <div class="form-group">
+          <label for="perfil-cidade">Cidade</label>
+          <input type="text" id="perfil-cidade" name="cidade" autocomplete="address-level2">
+        </div>
+        <div class="form-group">
+          <label for="perfil-estado">Estado</label>
+          <input type="text" id="perfil-estado" name="estado" maxlength="2" style="text-transform:uppercase;">
+        </div>
+        <div class="form-group">
+          <label for="perfil-pastor">Nome do Pastor/Líder</label>
+          <input type="text" id="perfil-pastor" name="pastor">
+        </div>
+        <div class="form-group">
+          <label for="perfil-entrada">Data de entrada</label>
+          <input type="date" id="perfil-entrada" name="entrada">
+        </div>
+        <div class="form-group">
+          <label for="perfil-batismo">Data de batismo</label>
+          <input type="date" id="perfil-batismo" name="batismo">
+        </div>
+        <div class="form-group">
+          <label>Autoriza lembretes?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="lembretes" value="sim"> Sim</label>
+            <label><input type="radio" name="lembretes" value="nao"> Não</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Canal de lembrete</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="canal" value="whatsapp"> WhatsApp</label>
+            <label><input type="checkbox" name="canal" value="email"> E-mail</label>
+            <label><input type="checkbox" name="canal" value="sms"> SMS</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:1.5rem;">Salvar Alterações</button>
+      </form>
+      <div id="perfil-msg" style="margin-top:1.2rem;text-align:center;"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div id="divisor-ft"></div>
+    <div class="container">
+      <p>&copy; 2025 Prosperando.me - Gestão de dízimos e ofertas.</p>
+      <p class="footer-verse">"Trazei todos os dízimos à casa do tesouro..." - Malaquias 3:10</p>
+    </div>
+  </footer>
+  <script type="module" src="js/menu-mobile.js"></script>
+  <script type="module" src="js/perfil.js"></script>
+</body>
+</html> 

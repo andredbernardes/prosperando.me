@@ -17,7 +17,7 @@ export default defineConfig({
         short_name: 'Prosperando.me',
         description: 'Calcule corretamente seus Dízimos, Ofertas, Primícias e Semeaduras',
         theme_color: '#1A2A2A',
-        background_color: '#f4f6fa',
+        background_color: '#15803D',
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
@@ -60,7 +60,8 @@ export default defineConfig({
         login: resolve(__dirname, 'login.html'),
         membro: resolve(__dirname, 'membro.html'),
         recuperar: resolve(__dirname, 'recuperar.html'),
-        sobre: resolve(__dirname, 'sobre.html')
+        sobre: resolve(__dirname, 'sobre.html'),
+        perfil: resolve(__dirname, 'perfil.html')
       }
     }
   },

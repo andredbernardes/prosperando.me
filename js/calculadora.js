@@ -1,6 +1,9 @@
 import '../style.css';
 import './menu-mobile.js';
 import Chart from 'chart.js/auto';
+import { auth, db } from './firebase.js';
+import { onAuthStateChanged } from 'firebase/auth';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 // Elementos DOM
 const rendaInput = document.getElementById('renda');
@@ -22,6 +25,9 @@ const btnComprovante = document.getElementById('btn-comprovante');
 const modalPagamento = document.getElementById('modal-pagamento');
 const modalClose = document.getElementById('modal-close');
 const modalBackdrop = document.getElementById('modal-backdrop');
+const btnSalvarTributo = document.getElementById('btn-salvar-tributo');
+let usuarioLogado = null;
+let ultimoResultado = null;
 
 function formatarMoeda(valor) {
     return new Intl.NumberFormat('pt-BR', {
@@ -156,7 +162,7 @@ function mostrarNotificacao(mensagem, tipo = 'info') {
     notificacao.textContent = mensagem;
     Object.assign(notificacao.style, {
         position: 'fixed',
-        top: '20px',
+        top: '80px',
         right: '20px',
         padding: '12px 20px',
         borderRadius: '8px',
@@ -223,6 +229,7 @@ function atualizarBotoesAcoes(ativo) {
         btnComprovante.style.display = ativo ? 'inline-flex' : 'none';
         btnComprovante.disabled = true;
     }
+    if (btnSalvarTributo) btnSalvarTributo.style.display = ativo && ultimoResultado ? 'inline-flex' : 'none';
 }
 
 // Mostrar modal de pagamento
@@ -308,37 +315,86 @@ function extrairValorNumerico(input) {
     return parseFloat(input.value.replace(/[^\d]/g, '')) / 100 || 0;
 }
 
-// Substituir o listener do botão calcular para restaurar o fluxo correto
-document.getElementById('calcular').addEventListener('click', () => {
-    try {
-        const rendaMensal = extrairValorNumerico(rendaInput);
-        const rendaExtra = extrairValorNumerico(rendaExtraInput);
-        if (!validarEntrada(rendaMensal) && !validarEntrada(rendaExtra)) {
-            mostrarNotificacao('Por favor, insira um valor válido para a renda.', 'error');
-            atualizarBotoesAcoes(false);
-            return;
-        }
-        if (rendaMensal + rendaExtra <= 0) {
-            mostrarNotificacao('A renda total deve ser maior que zero.', 'error');
-            atualizarBotoesAcoes(false);
-            return;
-        }
-        const resultados = calcularContribuicoes(rendaMensal, rendaExtra);
-        atualizarInterface(resultados);
-        mostrarNotificacao('Cálculos realizados com sucesso!', 'success');
-        exibirAcoesSeCalculoValido(resultados);
-        localStorage.setItem('ultimoCalculo', JSON.stringify({
-            rendaMensal,
-            rendaExtra,
-            resultados,
-            timestamp: Date.now()
-        }));
-    } catch (error) {
-        console.error('Erro no cálculo:', error);
-        mostrarNotificacao(error.message || 'Erro ao calcular as contribuições.', 'error');
-        atualizarBotoesAcoes(false);
+// Exibe o botão Salvar Tributo apenas para usuários logados
+onAuthStateChanged(auth, (user) => {
+    usuarioLogado = user;
+    // O botão só aparece se estiver logado E houver cálculo válido
+    if (btnSalvarTributo) {
+        btnSalvarTributo.style.display = (user && ultimoResultado) ? 'inline-flex' : 'none';
     }
 });
+
+// Salva o último cálculo realizado para uso no botão
+function salvarUltimoResultado(resultados) {
+    ultimoResultado = resultados;
+    // Só mostra o botão se o usuário estiver logado e houver cálculo
+    if (btnSalvarTributo) {
+        btnSalvarTributo.style.display = (usuarioLogado && ultimoResultado) ? 'inline-flex' : 'none';
+    }
+}
+
+// Modificar o fluxo do cálculo para guardar o último resultado
+const calcularBtnOriginal = document.getElementById('calcular');
+if (calcularBtnOriginal) {
+    calcularBtnOriginal.addEventListener('click', () => {
+        try {
+            const rendaMensal = extrairValorNumerico(rendaInput);
+            const rendaExtra = extrairValorNumerico(rendaExtraInput);
+            if (!validarEntrada(rendaMensal) && !validarEntrada(rendaExtra)) {
+                mostrarNotificacao('Por favor, insira um valor válido para a renda.', 'error');
+                atualizarBotoesAcoes(false);
+                return;
+            }
+            if (rendaMensal + rendaExtra <= 0) {
+                mostrarNotificacao('A renda total deve ser maior que zero.', 'error');
+                atualizarBotoesAcoes(false);
+                return;
+            }
+            const resultados = calcularContribuicoes(rendaMensal, rendaExtra);
+            atualizarInterface(resultados);
+            mostrarNotificacao('Cálculos realizados com sucesso!', 'success');
+            exibirAcoesSeCalculoValido(resultados);
+            localStorage.setItem('ultimoCalculo', JSON.stringify({
+                rendaMensal,
+                rendaExtra,
+                resultados,
+                timestamp: Date.now()
+            }));
+            salvarUltimoResultado({ ...resultados, rendaMensal, rendaExtra });
+        } catch (error) {
+            console.error('Erro no cálculo:', error);
+            mostrarNotificacao(error.message || 'Erro ao calcular as contribuições.', 'error');
+            atualizarBotoesAcoes(false);
+        }
+    });
+}
+
+// Função para salvar tributo no Firestore
+async function salvarTributoFirestore() {
+    if (!usuarioLogado) {
+        mostrarNotificacao('Você precisa estar logado para salvar.', 'error');
+        return;
+    }
+    if (!ultimoResultado) {
+        mostrarNotificacao('Realize um cálculo antes de salvar.', 'warning');
+        return;
+    }
+    try {
+        await addDoc(collection(db, 'tributos'), {
+            ...ultimoResultado,
+            uid: usuarioLogado.uid,
+            criadoEm: serverTimestamp()
+        });
+        mostrarNotificacao('Tributo salvo com sucesso!', 'success');
+    } catch (error) {
+        console.error('Erro ao salvar tributo:', error);
+        mostrarNotificacao('Erro ao salvar tributo. Tente novamente.', 'error');
+    }
+}
+if (btnSalvarTributo) {
+    btnSalvarTributo.addEventListener('click', salvarTributoFirestore);
+}
+
 // Inicialização: esconder botões
 atualizarBotoesAcoes(false);
 
@@ -393,6 +449,9 @@ function limparCampos() {
     if (rendaRestante) rendaRestante.textContent = 'R$ 0,00';
     if (percentualTotal) percentualTotal.textContent = '0%';
     rendaInput.focus();
+    ultimoResultado = null;
+    if (btnSalvarTributo) btnSalvarTributo.style.display = 'none';
+    atualizarBotoesAcoes(false);
     verificarInputsEVizualizacao();
 }
 const limparBtn = document.getElementById('limpar');

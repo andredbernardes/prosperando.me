@@ -51,12 +51,33 @@
     </div>
   </header>
   <main class="main novo-layout">
-    <div id="dashboard-container" class="novo-card">
-      <h1>Bem-vindo à sua Dashboard!</h1>
-      <div id="user-info">
-        <p>Carregando seus dados...</p>
+    <div class="dashboard-container">
+      <h2>Minhas Contribuições</h2>
+      <div class="dashboard-grafico-totais">
+        <div class="dashboard-grafico">
+          <canvas id="grafico-tributos" height="220"></canvas>
+        </div>
+        <div class="dashboard-totais" id="dashboard-totais">
+          <!-- Totais dos tributos serão preenchidos via JS -->
+        </div>
       </div>
-      <button id="btn-ir-calculadora" class="btn btn-primary">Ir para Calculadora</button>
+      <div class="dashboard-tabela">
+        <table id="tabela-tributos">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Dízimo</th>
+              <th>Oferta</th>
+              <th>Primícias</th>
+              <th>Semeadura</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Linhas serão preenchidas via JS -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </main>
   <footer class="footer">

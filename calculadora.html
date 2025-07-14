@@ -13,17 +13,17 @@
     <div class="navbar-content">
       <div class="navbar-logo">
         <a href="/" style="display:flex;align-items:center;gap:0.7rem;text-decoration:none;">
-          <span class="logo-icon">🌱</span>
+          <span class="logo-icon"><img src="img/icon-primicias.svg" alt="Primícias"></span>
           <span class="logo-text">Prosperando.me</span>
         </a>
       </div>
       <ul class="navbar-menu">
-        <li><a href="/calculadora" class="navbar-link">🌱 Calculadora</a></li>
-        <li><a href="/doacoes" class="navbar-link">🪙 Doações</a></li>
-        <li><a href="/sobre" class="navbar-link">🙏 Sobre</a></li>
+        <li><a href="/calculadora" class="navbar-link"><img src="img/icon-calculadora.svg" alt="Calculadora"> Calculadora</a></li>
+        <li><a href="/doacoes" class="navbar-link"><img src="img/icon-oferta.svg" alt="Ofertas"> Doações</a></li>
+        <li><a href="/sobre" class="navbar-link"><img src="img/icon-maos.svg" alt="Sobre"> Sobre</a></li>
       </ul>
       <div class="navbar-user" id="navbar-user-container">
-        <a href="/login" class="navbar-login">Entrar</a>
+        <a href="/login" class="navbar-login" id="navbar-login-btn">Entrar</a>
       </div>
       <button class="navbar-burger" id="navbar-burger" aria-label="Abrir menu">
         <span></span><span></span><span></span>
@@ -32,9 +32,9 @@
     <div class="navbar-drawer" id="navbar-drawer">
       <button class="drawer-close" id="drawer-close" aria-label="Fechar menu">&times;</button>
       <ul class="drawer-menu">
-        <li><a href="/calculadora" class="drawer-link">Calculadora</a></li>
-        <li><a href="/doacoes" class="drawer-link">Doações</a></li>
-        <li><a href="/sobre" class="drawer-link">Sobre</a></li>
+        <li><a href="/calculadora" class="navbar-link"><img src="img/icon-calculadora.svg" alt="Calculadora"> Calculadora</a></li>
+        <li><a href="/doacoes" class="navbar-link"><img src="img/icon-oferta.svg" alt="Ofertas"> Doações</a></li>
+        <li><a href="/sobre" class="navbar-link"><img src="img/icon-maos.svg" alt="Sobre"> Sobre</a></li>
       </ul>
       <div class="drawer-user" id="drawer-user-container"></div>
     </div>
@@ -47,7 +47,7 @@
     <header class="header">
       <div class="container">
           <h1 class="logo">
-              <span class="logo-icon">🌱</span>
+              <span class="logo-icon"><img src="img/icon-calculadora.svg" alt="Calculadora"></span>
               <span class="logo-text">Calculadora de Tributos</span>
           </h1>
           <p class="subtitle">Calcule dízimos, ofertas, primícias e semeaduras de forma simples, visual e elegante.</p>
@@ -87,28 +87,28 @@
               <section class="results-section" id="results" style="display: none;">
                   <div class="results-grid">
                       <div class="result-card primicias">
-                          <div class="result-icon">🌱</div>
+                          <div class="result-icon"><img src="img/icon-primicias.svg" alt="Primícias"></div>
                           <h3>Primícias</h3>
                           <div class="result-value" id="primicias-valor">R$ 0,00</div>
                           <div class="result-percent">Primeiros frutos</div>
                           <div class="result-description">Primeira parte de suas bênçãos (1 dia de trabalho)</div>
                       </div>
                       <div class="result-card dizimo">
-                          <div class="result-icon">⛪</div>
+                          <div class="result-icon"><img src="img/icon-igreja.svg" alt="Igreja"></div>
                           <h3>Dízimo</h3>
                           <div class="result-value" id="dizimo-valor">R$ 0,00</div>
                           <div class="result-percent">10% de toda a renda</div>
                           <div class="result-description">Contribuição regular para a obra de Deus</div>
                       </div>
                       <div class="result-card semeadura">
-                          <div class="result-icon">🪴</div>
+                          <div class="result-icon"><img src="img/icon-semeadura.svg" alt="Semeadura"></div>
                           <h3>Semeadura</h3>
                           <div class="result-value" id="semeadura-valor">R$ 0,00</div>
                           <div class="result-percent">Investimento espiritual</div>
                           <div class="result-description">Semeie para colher abundância</div>
                       </div>
                       <div class="result-card oferta">
-                          <div class="result-icon">🪙</div>
+                          <div class="result-icon"><img src="img/icon-oferta.svg" alt="Ofertas"></div>
                           <h3>Oferta</h3>
                           <div class="result-value" id="oferta-valor">R$ 0,00</div>
                           <div class="result-percent">Mínimo de 1% da renda</div>

@@ -1,3 +1,5 @@
+import iconDash from '../img/icon-dash.svg';
+import iconMaos from '../img/icon-maos.svg';
 // Menu drawer mobile universal
 import { auth } from './firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -45,7 +47,7 @@ function addDashboardMenuIfLoggedIn(loggedIn) {
     if (loggedIn) {
       dashboardLi = document.createElement('li');
       dashboardLi.className = 'menu-dashboard';
-      dashboardLi.innerHTML = '<a href="/dashboard" class="navbar-link">📊 Dashboard</a>';
+      dashboardLi.innerHTML = `<a href="/dashboard" class="navbar-link"><img src="${iconDash}" alt="Dashboard"> Dashboard</a>`;
       navbarMenu.insertBefore(dashboardLi, navbarMenu.firstChild);
     }
   }
@@ -57,7 +59,7 @@ function addDashboardMenuIfLoggedIn(loggedIn) {
     if (loggedIn) {
       dashboardLi = document.createElement('li');
       dashboardLi.className = 'menu-dashboard';
-      dashboardLi.innerHTML = '<a href="/dashboard" class="drawer-link">Dashboard</a>';
+      dashboardLi.innerHTML = `<a href="/dashboard" class="navbar-link"><img src="${iconDash}" alt="Dashboard"> Dashboard</a>`;
       drawerMenu.insertBefore(dashboardLi, drawerMenu.firstChild);
     }
   }
@@ -75,7 +77,7 @@ function renderUserMenu(user) {
     const dropdown = document.createElement('div');
     dropdown.className = 'user-dropdown';
     dropdown.innerHTML = `
-      <button class="user-btn" type="button">🙏 ${user.displayName || user.email || 'Usuário'} </button>
+      <button class="user-btn" type="button"><img src="${iconMaos}" alt="Dashboard"> ${user.displayName || user.email || 'Usuário'} </button>
       <div class="user-dropdown-content">
         <a href="./perfil.html">Meu perfil</a>
         <a href="#" id="logout-link${isMobile ? '-mobile' : ''}">Sair</a>

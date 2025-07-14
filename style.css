@@ -530,9 +530,8 @@ div#divisor-ft {
     font-weight: 700;
     color: var(--primary-dark);
 }
-.navbar-logo .logo-icon {
-    font-size: 2rem;
-    color: var(--primary);
+.navbar-logo .logo-icon img {
+    width: 2rem;
 }
 .navbar-logo .logo-text {
     font-size: 1.3rem;
@@ -581,6 +580,16 @@ div#divisor-ft {
     background: var(--primary-dark);
     box-shadow: 0 4px 16px 0 rgba(22,163,74,0.13);
 }
+ul.navbar-menu li a img {
+    width: 24px;
+}
+a.navbar-link {
+    display: flex;
+    align-content: center;
+    gap: 8px;
+}
+
+
 @media (min-width: 901px) and (max-width: 1079px) {
     button#calcular {
         width: 65%;
@@ -601,6 +610,7 @@ div#divisor-ft {
     .btn-secondary {
         width: 100%!important;
     }
+   
 }
 @media (max-width: 900px) {
     .navbar-content {
@@ -681,6 +691,9 @@ div#divisor-ft {
         padding: 2rem;
         width: 96%;
     }
+    h1.logo .logo-icon img {
+        width: 3rem;
+    }
 }
 @media (max-width: 600px) {
     .top-navbar {
@@ -695,11 +708,23 @@ div#divisor-ft {
         border-radius: 12px;
     }
     .navbar-logo .logo-icon {
-        font-size: 1.1rem;
+        font-size: 1.6rem;
     }
     .navbar-logo .logo-text {
         font-size: 0.95rem;
     }
+    span.logo-icon img {
+        width: 30px;
+    }
+    ul.drawer-menu li a img {
+    width: 24px;
+    align-content: center;
+    display: flex;
+    }
+    ul.drawer-menu li {
+        margin-bottom: 10px;
+    }
+    
     .navbar-menu {
         gap: 0.5rem;
         overflow-x: auto;
@@ -1029,7 +1054,7 @@ body, .main, .novo-layout, .header {
          grid-template-columns: 1fr;
      }
      .versiculo-card, .tips-card {
-         padding: 1.2rem 0.7rem;
+         padding: 1.2rem 1.5rem;
      }
      .igreja-section {
          grid-template-columns: 1fr;
@@ -1321,6 +1346,13 @@ main.landing-main {
     position: relative !important;
     display: inline-block !important;
     z-index: 9999 !important;
+}
+.navbar-content .user-dropdown.open .user-dropdown-content, .user-dropdown.open .user-dropdown-content {
+    min-width: 200px!important;
+    background-color: #ffffff!important;
+}
+.navbar-content .user-dropdown.open .user-dropdown-content, .user-dropdown.open .user-dropdown-content a {
+    width: 82%;
 }
 .user-btn {
     background: #f8fafc !important;

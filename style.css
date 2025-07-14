@@ -596,10 +596,10 @@ div#divisor-ft {
 }
 @media (max-width: 398px) {
     button#calcular {
-        width: 60%!important;
+        width: 100%!important;
     }
     .btn-secondary {
-        width: 30%!important;
+        width: 100%!important;
     }
 }
 @media (max-width: 900px) {
@@ -633,7 +633,7 @@ div#divisor-ft {
         padding: 0 10px;
     }
     .landing-actions a {
-        width: 71%;
+        width: 71%!important;
     }
     #image-bg {
         width: 100vw;
@@ -644,7 +644,6 @@ div#divisor-ft {
         background-size: 200%;
         background-repeat: no-repeat;
         background-position: 35%;
-        background-position-y: 13rem;
     }
     .container-img {
         margin-left: 3rem;
@@ -1631,4 +1630,51 @@ canvas#grafico-tributos {
         padding: 1rem 0.7rem;
         font-size: 1rem;
     }
+} 
+
+@media (max-width: 400px) {
+  .input-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .input-actions button {
+    width: 100%!important;
+    margin-right: 0;
+  }
+  .input-actions button#calcular {
+    order: 1;
+  }
+  .input-actions button#limpar {
+    order: 2;
+  }
+} 
+
+.drawer-user {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 1.2rem 0 0.7rem 0 !important;
+  min-height: 60px !important;
+  width: 100% !important;
+  background: transparent !important;
+}
+
+.drawer-user .navbar-login {
+  display: block !important;
+  width: 90% !important;
+  background: var(--primary) !important;
+  color: #fff !important;
+  text-align: center !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  padding: 1rem 0 !important;
+  margin: 0 auto !important;
+  box-shadow: var(--shadow) !important;
+  text-decoration: none !important;
+  border: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 9999 !important;
 } 

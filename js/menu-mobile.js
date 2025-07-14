@@ -112,13 +112,17 @@ function renderUserMenu(user) {
     } else {
       // Botão Entrar
       const loginBtn = document.createElement('a');
-      loginBtn.href = '/login';
+      loginBtn.href = '/login.html';
       loginBtn.className = 'navbar-login';
       loginBtn.textContent = 'Entrar';
-      if (window.innerWidth > 900) {
-        navbarUser.appendChild(loginBtn);
-      } else if (drawerUser) {
+      if (drawerUser) {
+        drawerUser.style.display = 'block';
+        drawerUser.innerHTML = '';
         drawerUser.appendChild(loginBtn);
+        console.log('Botão Entrar renderizado no drawer mobile');
+      }
+      if (window.innerWidth > 900 && navbarUser) {
+        navbarUser.appendChild(loginBtn.cloneNode(true));
       }
     }
   }

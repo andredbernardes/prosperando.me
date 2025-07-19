@@ -29,6 +29,12 @@ const btnSalvarTributo = document.getElementById('btn-salvar-tributo');
 let usuarioLogado = null;
 let ultimoResultado = null;
 
+// Modal de tabela de ofertas
+const btnOfertaInfo = document.getElementById('btn-oferta-info');
+const modalOfertaTabela = document.getElementById('modal-oferta-tabela');
+const modalOfertaClose = document.getElementById('modal-oferta-close');
+const modalOfertaBackdrop = document.getElementById('modal-oferta-backdrop');
+
 function formatarMoeda(valor) {
     return new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -589,3 +595,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartSection = document.getElementById('chart-section');
     if (chartSection) chartSection.style.display = 'none';
 }); 
+
+function abrirModalOfertaTabela() {
+    if (modalOfertaTabela) modalOfertaTabela.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+function fecharModalOfertaTabela() {
+    if (modalOfertaTabela) modalOfertaTabela.style.display = 'none';
+    document.body.style.overflow = '';
+}
+// Garantir que o evento seja registrado mesmo se o DOM ainda não estiver pronto
+function registrarEventosModalOferta() {
+    if (btnOfertaInfo && modalOfertaTabela && modalOfertaClose && modalOfertaBackdrop) {
+        btnOfertaInfo.addEventListener('click', abrirModalOfertaTabela);
+        modalOfertaClose.addEventListener('click', fecharModalOfertaTabela);
+        modalOfertaBackdrop.addEventListener('click', fecharModalOfertaTabela);
+    }
+}
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', registrarEventosModalOferta);
+} else {
+    registrarEventosModalOferta();
+} 

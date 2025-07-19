@@ -327,8 +327,9 @@ div#qrcode-pix img {
 .result-description {
     color: var(--text-muted);
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.4;
     font-weight: 400;
+    margin-bottom: 8px;
 }
 
 /* .total-section {
@@ -1281,13 +1282,58 @@ main.landing-main {
 .modal-close:hover {
     color: var(--primary);
 }
+i.ph-duotone {
+    color: #798787;
+    font-size: 1.5rem;
+}
+
+button#btn-oferta-info i {
+    align-items: center;
+    padding: 10px;
+}
+button#btn-oferta-info {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    color: #6b7a7a;
+}
+#modal-oferta-tabela .modal-content{
+    max-width: 50vw!important;
+}
+table.oferta-tabela thead tr th {
+    background: #f4f6fa;
+    border: 4px solid #fff;
+    padding: 6px 11px;
+    text-align: justify;
+}
+table.oferta-tabela tbody tr td {
+    padding: 6px 16px;
+    display: table-cell;
+}
 @media (max-width: 600px) {
+    #modal-oferta-tabela .modal-content {
+        max-width: 100vw !important;
+    }
     .modal-content {
-        padding: 1.2rem 5.5rem;
+        padding: 1.2rem 1.5rem;
         min-width: 0;
         max-width: 98vw;
         max-height: 96vh;
         align-items: center;
+    }
+    table.oferta-tabela thead tr th {
+        text-align: left;
+    }
+    .modal-content h2 {
+        margin-top: 3rem;
+    }
+    table.oferta-tabela tbody tr td {
+        padding: 3px 10px;
+        display: table-cell;
+        font-size: 0.9rem;
     }
     .payment-actions .btn {
         min-width: 0;

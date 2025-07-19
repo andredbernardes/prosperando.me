@@ -9,6 +9,8 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="stylesheet" href="style.css">
+  <!-- Phosphor Icons CDN -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Calculadora de Tributos | Prosperando.me">
@@ -137,7 +139,12 @@
                           <div class="result-value" id="oferta-valor">R$ 0,00</div>
                           <div class="result-percent">Valor fixo por culto</div>
                           <div class="result-description">Oferta voluntária de gratidão</div>
-                      </div>
+
+                          <button id="btn-oferta-info" class="oferta-info-btn" title="Ver tabela de ofertas" style="background:none;border:none;cursor:pointer;padding:0;margin-left:0.5em;vertical-align:middle;">
+                            <i class="ph-duotone ph-table"></i><p class="ver-tabela">ver tabela</p>
+                          </button>
+
+                        </div>
                   </div>
               </section>
               <div class="total-section">
@@ -215,6 +222,35 @@
       </div>
     </div>
     <div class="modal-backdrop" id="modal-backdrop"></div>
+  </div>
+  <!-- Modal de Tabela de Ofertas -->
+  <div id="modal-oferta-tabela" class="modal-pagamento" style="display:none;z-index:1200;">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-oferta-close">&times;</button>
+      <h2>Tabela de Ofertas por Salário</h2>
+      <subtitle style="font-size:0.95em;color:#627e66;">Cada qual, conforme o dom da sua mão, conforme a bênção do Senhor, teu Deus, te tiver dado. <b style="color: green;">(Deuteronômio 16:17)</b></subtitle>
+      <table class="oferta-tabela" style="width:100%;margin:1.5em 0 1em 0;border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th>Faixa Salarial (R$)</th>
+            <th>Oferta Sugerida</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Até R$1.518,00</td><td>R$2,00</td></tr>
+          <tr><td>R$1.518,01 a R$3.035,99</td><td>R$3,00</td></tr>
+          <tr><td>R$3.036,00 a R$6.072,00</td><td>R$5,00</td></tr>
+          <tr><td>R$7.590,00 a R$10.626,00</td><td>R$10,00</td></tr>
+          <tr><td>R$12.144,00 a R$15.180,00</td><td>R$20,00</td></tr>
+          <tr><td>R$16.698,00 a R$30.360,00</td><td>R$50,00</td></tr>
+          <tr><td>R$31.878,00 a R$75.900,00</td><td>R$100,00</td></tr>
+          <tr><td>R$77.418,00 a R$151.800,00</td><td>R$500,00</td></tr>
+          <tr><td>Acima de R$151.800,00</td><td>Especial (consulte o sacerdote)</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.95em;color:#64748b;">Valor fixo sugerido por culto, célula e eventos outros na igreja, conforme faixa salarial.</p>
+    </div>
+    <div class="modal-backdrop" id="modal-oferta-backdrop"></div>
   </div>
   <footer class="footer">
     <div id="divisor-ft"></div>

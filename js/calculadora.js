@@ -44,18 +44,82 @@ function validarEntrada(valor) {
     const num = parseFloat(valor);
     return !isNaN(num) && num >= 0;
 }
+
+// Tabela de oferta baseada em faixas salariais
+const TABELA_OFERTA = [
+    { min: 0, max: 1518, valor: 2.00 },
+    { min: 1518.01, max: 3035.99, valor: 3.00 },
+    { min: 3036, max: 6072, valor: 5.00 },
+    { min: 7590, max: 10626, valor: 10.00 },
+    { min: 12144, max: 15180, valor: 20.00 },
+    { min: 16698, max: 30360, valor: 50.00 },
+    { min: 31878, max: 75900, valor: 100.00 },
+    { min: 77418, max: 151800, valor: 500.00 }
+];
+
+// Função para calcular oferta baseada na tabela de faixas
+function calcularOferta(rendaTotal) {
+    // Verificar se está acima de 100 salários (R$ 151.800,00)
+    if (rendaTotal > 151800) {
+        return {
+            valor: null,
+            mensagem: "Valor especial",
+            tipo: "especial"
+        };
+    }
+    
+    // Encontrar a faixa correspondente à renda
+    const faixa = TABELA_OFERTA.find(item => 
+        rendaTotal >= item.min && rendaTotal <= item.max
+    );
+    
+    if (faixa) {
+        return {
+            valor: faixa.valor,
+            mensagem: `Com base no piso salarial`,
+            tipo: "normal"
+        };
+    }
+    
+    // Caso não encontre faixa (deve ser entre 6072.01 e 7589.99, ou 10626.01 e 12143.99, etc.)
+    // Usar a faixa anterior mais próxima
+    const faixaAnterior = TABELA_OFERTA.filter(item => item.max < rendaTotal)
+        .sort((a, b) => b.max - a.max)[0];
+    
+    if (faixaAnterior) {
+        return {
+            valor: faixaAnterior.valor,
+            mensagem: `Valor fixo por visita à igreja`,
+            tipo: "normal"
+        };
+    }
+    
+    // Fallback para rendas muito baixas
+    return {
+        valor: 2.00,
+        mensagem: `Valor fixo por visita à igreja`,
+        tipo: "normal"
+    };
+}
+
 function calcularContribuicoes(rendaMensal, rendaExtra = 0) {
     const rendaTotal = rendaMensal + rendaExtra;
     if (rendaTotal <= 0) {
         throw new Error('A renda deve ser maior que zero');
     }
+    
     const primicias = rendaTotal / 30;
     const dizimo = (rendaTotal - primicias) * 0.10;
-    const oferta = rendaTotal * 0.01;
+    
+    // Nova lógica para cálculo da oferta
+    const ofertaInfo = calcularOferta(rendaTotal);
+    const oferta = ofertaInfo.valor || 0; // Se for null, usar 0
+    
     const semeadura = rendaTotal * 0.01;
     const totalContribuicoes = dizimo + oferta + primicias + semeadura;
     const rendaRestante = rendaTotal - totalContribuicoes;
     const percentualTotal = (totalContribuicoes / rendaTotal) * 100;
+    
     return {
         dizimo,
         oferta,
@@ -64,17 +128,22 @@ function calcularContribuicoes(rendaMensal, rendaExtra = 0) {
         totalContribuicoes,
         rendaRestante,
         percentualTotal,
-        rendaTotal
+        rendaTotal,
+        ofertaInfo // Incluir informações da oferta para uso na interface
     };
 }
 let chartContribuicoes = null;
 function atualizarGrafico(resultados) {
     const ctx = document.getElementById('chartContribuicoes').getContext('2d');
+    
+    // Tratar caso especial da oferta (quando é "Converse com seu sacerdote")
+    const ofertaValor = resultados.ofertaInfo && resultados.ofertaInfo.tipo === "especial" ? 0 : resultados.oferta;
+    
     const data = {
         labels: ['Dízimo', 'Oferta', 'Primícias', 'Semeadura'],
         datasets: [{
             label: 'Valor (R$)',
-            data: [resultados.dizimo, resultados.oferta, resultados.primicias, resultados.semeadura],
+            data: [resultados.dizimo, ofertaValor, resultados.primicias, resultados.semeadura],
             backgroundColor: [
                 'rgba(34,197,94,0.85)',
                 'rgba(16,185,129,0.80)',
@@ -130,13 +199,22 @@ function atualizarGrafico(resultados) {
 }
 function atualizarInterface(resultados) {
     dizimoValor.textContent = formatarMoeda(resultados.dizimo);
-    ofertaValor.textContent = formatarMoeda(resultados.oferta);
+    
+    // Atualizar interface da oferta baseada na nova lógica
+    if (resultados.ofertaInfo.tipo === "especial") {
+        ofertaValor.textContent = resultados.ofertaInfo.mensagem;
+        document.querySelector('.oferta .result-percent').textContent = 'Consulte seu sacerdote';
+        document.querySelector('.oferta .result-description').textContent = 'Superior a 100 salários';
+    } else {
+        ofertaValor.textContent = formatarMoeda(resultados.oferta);
+        document.querySelector('.oferta .result-percent').textContent = 'Valor fixo por culto';
+        document.querySelector('.oferta .result-description').textContent = resultados.ofertaInfo.mensagem;
+    }
+    
     primiciasValor.textContent = formatarMoeda(resultados.primicias);
     semeaduraValor.textContent = formatarMoeda(resultados.semeadura);
     document.querySelector('.dizimo .result-percent').textContent = '10% da renda (após primícias)';
     document.querySelector('.dizimo .result-description').textContent = 'Dízimo da renda bruta';
-    document.querySelector('.oferta .result-percent').textContent = '1% da renda';
-    document.querySelector('.oferta .result-description').textContent = 'Ofertas (mínimo de 1%)';
     document.querySelector('.primicias .result-percent').textContent = '1/30 da renda total';
     document.querySelector('.primicias .result-description').textContent = 'Primícias = 1 dia de trabalho';
     document.querySelector('.semeadura .result-percent').textContent = '1% da renda';
@@ -413,6 +491,13 @@ function carregarUltimoCalculo() {
             const agora = Date.now();
             const umDia = 24 * 60 * 60 * 1000;
             if (agora - dados.timestamp < umDia) {
+                // Verificar se o cálculo antigo tem a nova estrutura de ofertaInfo
+                if (dados.resultados && !dados.resultados.ofertaInfo) {
+                    // Recalcular com a nova lógica se for um cálculo antigo
+                    const resultados = calcularContribuicoes(dados.rendaMensal, dados.rendaExtra);
+                    dados.resultados = resultados;
+                }
+                
                 rendaInput.value = dados.rendaMensal;
                 rendaExtraInput.value = dados.rendaExtra;
                 atualizarInterface(dados.resultados);

@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBlzFowpGSpZSH22Jp_cD514qiPaDIBy8c",
@@ -17,6 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const messaging = getMessaging(app);
 
 // Configurações adicionais para melhorar a estabilidade da conexão
 const firestoreSettings = {
@@ -52,4 +54,4 @@ export async function reconnectFirestore() {
   }
 }
 
-export { app, auth, db, firestoreSettings }; 
+export { app, auth, db, firestoreSettings, messaging, getToken, onMessage }; 

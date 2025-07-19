@@ -1,9 +1,41 @@
 import '../style.css';
 import './menu-mobile.js';
 import Chart from 'chart.js/auto';
-import { auth, db } from './firebase.js';
+import { auth, db, messaging, getToken, onMessage } from './firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+
+// Substitua pela sua chave pública VAPID do Firebase Console
+const VAPID_KEY = 'SUA_PUBLIC_VAPID_KEY';
+
+async function solicitarPermissaoENotificar() {
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      const token = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: await navigator.serviceWorker.ready });
+      console.log('Token do usuário para notificações:', token);
+      // Aqui você pode salvar o token no Firestore para enviar notificações depois
+    } else {
+      console.log('Permissão de notificação negada');
+    }
+  } catch (error) {
+    console.error('Erro ao obter token de notificação:', error);
+  }
+}
+
+// Registrar o service worker do Firebase Messaging
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then(() => {
+      solicitarPermissaoENotificar();
+    });
+}
+
+// Receber notificações em foreground
+onMessage(messaging, (payload) => {
+  console.log('Mensagem recebida em foreground:', payload);
+  // Exiba um toast ou notificação customizada se desejar
+});
 
 // Elementos DOM
 const rendaInput = document.getElementById('renda');

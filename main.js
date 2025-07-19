@@ -671,6 +671,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Troca dinâmica dos botões na landing page conforme login
+function atualizarBotoesLanding(logado) {
+  const landingActions = document.querySelector('.landing-actions');
+  if (!landingActions) return;
+  landingActions.innerHTML = `
+    <a href="/calculadora" class="btn btn-primary">Acessar Calculadora</a>
+    ${logado
+      ? '<a href="/dashboard" class="btn btn-secondary">Meu Dashboard</a>'
+      : '<a href="/cadastro" class="btn btn-secondary">Criar Conta</a>'}
+  `;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  onAuthStateChanged(auth, (user) => {
+    atualizarBotoesLanding(!!user);
+  });
+});
+
 console.log('Calculadora de Dízimos carregada com sucesso! 🎉'); 
 
 // Drawer menu mobile (abrir/fechar)
